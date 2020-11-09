@@ -1,0 +1,74 @@
+spring:
+  cloud:
+    gateway:
+      default-filters:    # apply to all routes
+        - AddResponseHeader=X-Response-Default-Red, Default-Blue
+      routes:
+        - id: route1
+          uri: https://httpbin.org
+          predicates:
+            - Host=**.somehost.org,{sub}.anotherhost.org
+            - Header=X-Request-Id, \d+
+            - Cookie=mycookie,mycookievalue
+            - After=2020-01-20T17:42:47.789-07:00[America/Denver]
+            - Before=2020-01-21T17:42:47.789-07:00[America/Denver]
+            - Method=GET,POST
+            - Path=/red/{segment},/blue/{segment}
+            - Query=green
+            - Query=red, gree.
+            - RemoteAddr=192.168.1.1/24
+            - Weight=group1, 8
+          filters:
+            - AddRequestHeader=X-Request-Red, Blue-{segment}
+            - AddRequestParameter=foo, bar-{sub}
+            - AddResponseHeader=foo, bar-{segment}
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+            - MapRequestHeader=Blue, X-Request-Red
+            - PrefixPath=/mypath
+            - PreserveHostHeader
+            - RedirectTo=302, https://acme.org
+            - RemoveRequestHeader=X-Request-Foo
+            - RemoveResponseHeader=X-Response-Foo
+            - RemoveRequestParameter=red
+            - RewritePath=/red(?<segment>/?.*), $\{segment}   # for example, would change /red/blue to /blue for any predicate match on -Path=/red/**
+  #          - SetPath=/{segment}
+            - RewriteLocationResponseHeader=AS_IN_REQUEST, Location, ,
+            - RewriteResponseHeader=X-Response-Red, , password=[^&]+, password=***
+            - SaveSession
+            - SetRequestHeader=X-Request-Red, Blue-{segment}
+            - SetResponseHeader=X-Response-Red, Blue-{segment}
+            - SetStatus=BAD_REQUEST   # or SetStatus=401
+            - StripPrefix=2   # with uri: https://nameservice and -Path=/name/red/** would change /name/red/blue to nameservice/blue
+            - name: Retry
+              args:
+                retries: 3
+                statuses: BAD_GATEWAY
+                methods: GET,POST
+                backoff:
+                  firstBackoff: 10ms
+                  maxBackoff: 50ms
+                  factor: 2
+                  basedOnPreviousValue: false
+            - name: RequestSize               # Sets response status 413 Payload Too Large
+              args:
+                maxSize: 5000000
+            - name: SetRequestHost
+              args:
+                host: example.org
+            # Circuit breaker example 1
+            - CircuitBreaker=myCircuitBreaker # Configure Resilience4J: https://cloud.spring.io/spring-cloud-circuitbreaker/reference/html/spring-cloud-circuitbreaker.html
+            # Circuit breaker example 1  - internal fallback
+            - name: CircuitBreaker
+              args:
+                name: myCircuitBreaker2
+                fallbackUri: forward:/internal-fallback
+            - RewritePath=/consumingServiceEndpoint, /backingServiceEndpoint
+            # Circuit breaker example 3  - external fallback (see route id "route1-external-fallback")
+            - name: CircuitBreaker
+              args:
+                name: myCircuitBreaker3
+                fallbackUri: forward:/fallback
+        - id: route1-external-fallback
+          uri: http://localhost:9994
+          predicates:
+            - Path=/fallback
