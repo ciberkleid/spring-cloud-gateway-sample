@@ -31,5 +31,5 @@ spring:
 
 # Execute multiple times to see alternating uuid and ** responses
 # Execute until weighted routing goes to drip
-# notice Gateway Timeout after default 4 seconds - won't get to 10 seconds
+# Notice Gateway Timeout after default 4 seconds - won't get to 10 seconds
 # time http :8080/demo/10 Host:example.com
