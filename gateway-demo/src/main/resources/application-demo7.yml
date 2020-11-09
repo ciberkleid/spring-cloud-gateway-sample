@@ -24,7 +24,11 @@ spring:
             - AddRequestParameter=numbytes, 10
             - AddRequestParameter=code, 200   # response code
             - AddRequestParameter=delay, {delay}  # delay before responding (seconds)
-            - CircuitBreaker=myCircuitBreaker
+#            - CircuitBreaker=myCircuitBreaker
+            - name: CircuitBreaker
+              args:
+                name: myCircuitBreaker
+                fallbackUri: forward:/fallback/id
 
 # Show fallback config code
 
