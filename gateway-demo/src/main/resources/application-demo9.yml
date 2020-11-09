@@ -1,7 +1,10 @@
 #################### DEMO 9
 
-# Show Route config code in Java and modification of reqquest/response body
+# Show Route config code in Java and modification of request/response body
 
 # Test using the command below
-# Notice body is modified to upper case
-curl -X POST "http://localhost:8080/post" -i -d "Hello, world!"
+# Notice body is modified to upper case and contained in a "Msg" object
+# echo "Hello, world!" | http post httpbin.org/post | grep data
+#     you should see: "data": "Hello, world!\n",
+#  echo "Hello, world!" | http post :8080/post | grep data
+#     you should see: "data": "{\"msg\":\"HELLO, WORLD!\\n\"}",
