@@ -6,6 +6,19 @@ Sample project to demonstrate Spring Cloud Gateway.
 
 See the different application properties files for each example.
 
+To run:
+
+For each demo, run the following command and ofllow the instructions in the corresponding application-demoX.yml file:
+```
+cd gateway-demo
+./mvnw spring-boot:run -Dspring-boot.run.profiles=demo1
+```
+
+For the Rate Limiting example, you will need an instance of redis:
+```
+docker run -d --name redis -p 6379:6379 redis
+```
+
 To re-create base project:
 ```
 name=gateway-demo
