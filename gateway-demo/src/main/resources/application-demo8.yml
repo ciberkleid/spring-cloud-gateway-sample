@@ -1,0 +1,59 @@
+#################### DEMO 8
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: route1
+          uri: https://httpbin.org
+          predicates:
+            - Path=/demo/**
+            - Host=**.example.com
+            - Weight=group1, 5
+          filters:
+            - SetPath=/uuid
+        - id: route2
+          uri: https://httpbin.org
+          predicates:
+            - Path=/demo/{delay}
+            - Host=**.example.com
+            - Weight=group1, 5
+          filters:
+            - SetPath=/drip
+            - AddRequestParameter=duration, 0 # time to drip each byte (seconds)
+            - AddRequestParameter=numbytes, 10
+            - AddRequestParameter=code, 200   # response code
+            - AddRequestParameter=delay, {delay}  # delay before responding (seconds)
+            #            - CircuitBreaker=myCircuitBreaker
+            - name: CircuitBreaker
+              args:
+                name: myCircuitBreaker
+                fallbackUri: forward:/fallback/id
+        - id: route3
+          uri: https://httpbin.org
+          predicates:
+            - Path=/trial
+          filters:
+            - SetPath=/uuid
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 2
+                redis-rate-limiter.burstCapacity: 2
+
+# Demo redis rate limiter filter
+
+# Show reactive redis dependency in pom.xml
+# Show key resolver configuration in code
+# Start redis running on default port 6379
+#   docker run -d --name redis -p 6379:6379 redis
+
+# Execute once to show rate limiter headers
+# Header x-ratelimit-remaining shows the number of requests you may send in the next second
+# http http://localhost:8080/trial
+
+# Execute multiple times until a rate limiting message is obtained
+# Notice occasional 429 Too Many Requests
+
+# COMMAND="http http://localhost:8080/trial"; for i in {1..10}; do ${COMMAND}; done
+# or
+# COMMAND="http http://localhost:8080/trial"; for((i=1;i<=10;i+=1)); do ${COMMAND}; done

@@ -1,0 +1,18 @@
+#################### DEMO 3
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: route1
+          uri: https://httpbin.org
+          predicates:
+            - Path=/demo
+            - Host=**.example.com
+          filters:
+            - SetPath=/uuid
+
+# Show filter to set path
+
+# Test:
+# http :8080/demo Host:example.com --verbose

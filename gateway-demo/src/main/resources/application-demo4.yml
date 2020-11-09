@@ -1,0 +1,30 @@
+#################### DEMO 4
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: route1
+          uri: https://httpbin.org
+          predicates:
+            - Path=/demo
+            - Host=**.example.com
+          filters:
+            - SetPath=/uuid
+        - id: route2
+          uri: https://httpbin.org
+          predicates:
+            - Path=/demo/{delay}
+            - Host=**.example.com
+          filters:
+            - SetPath=/drip
+            - AddRequestParameter=duration, 0 # time to drip each byte (seconds)
+            - AddRequestParameter=numbytes, 10
+            - AddRequestParameter=code, 200   # response code
+            - AddRequestParameter=delay, {delay}  # delay before responding (seconds)
+
+# Show use of Host/Path URI variables (e.g. {delay})
+# Show filters to set a new path and add request parameters (e.g. /drip?duration=2&numbytes=10&code=200&delay=2)
+
+# Test:
+# time http :8080/demo/2 Host:example.com --verbose

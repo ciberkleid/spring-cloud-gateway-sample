@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: my-gateway
+  cloud:
+    gateway:
+      metrics:
+        enabled: true   # default value
+      actuator:
+        verbose:
+          enabled: true   # see /actuator/gateway/routes
+
+management:
+  endpoint:
+    gateway:
+      enabled: true       # default value
+  endpoints:
+    web:
+      exposure:
+        include: "*"        # OR include: gateway

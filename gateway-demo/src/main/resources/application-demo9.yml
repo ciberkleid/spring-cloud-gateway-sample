@@ -1,0 +1,7 @@
+#################### DEMO 9
+
+# Show Route config code in Java and modification of reqquest/response body
+
+# Test using the command below
+# Notice body is modified to upper case
+curl -X POST "http://localhost:8080/post" -i -d "Hello, world!"

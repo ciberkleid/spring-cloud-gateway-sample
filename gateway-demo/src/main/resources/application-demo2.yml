@@ -1,0 +1,17 @@
+#################### DEMO 2
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: route1
+          uri: https://httpbin.org
+          predicates:
+            - Path=/uuid
+            - Host=**.example.com
+
+# Show combined path and host predicate routing to a destination uri
+
+# Test:
+# http :8080/uuid --verbose
+# http :8080/uuid Host:example.com --verbose

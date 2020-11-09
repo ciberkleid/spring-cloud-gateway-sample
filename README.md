@@ -4,6 +4,8 @@
 
 Sample project to demonstrate Spring Cloud Gateway.
 
+See the different application properties files for each example.
+
 To re-create base project:
 ```
 name=gateway-demo

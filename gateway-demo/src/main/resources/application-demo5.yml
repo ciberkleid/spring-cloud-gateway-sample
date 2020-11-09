@@ -1,0 +1,31 @@
+#################### DEMO 5
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: route1
+          uri: https://httpbin.org
+          predicates:
+            - Path=/demo/**
+            - Host=**.example.com
+            - Weight=group1, 5
+          filters:
+            - SetPath=/uuid
+        - id: route2
+          uri: https://httpbin.org
+          predicates:
+            - Path=/demo/{delay}
+            - Host=**.example.com
+            - Weight=group1, 5
+          filters:
+            - SetPath=/drip
+            - AddRequestParameter=duration, 0 # time to drip each byte (seconds)
+            - AddRequestParameter=numbytes, 10
+            - AddRequestParameter=code, 200   # response code
+            - AddRequestParameter=delay, {delay}  # delay before responding (seconds)
+
+# Show weighted routing
+
+# Execute multiple times to see alternating uuid and ** responses
+# time http :8080/demo/0 Host:example.com
