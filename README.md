@@ -6,9 +6,7 @@ Sample project to demonstrate Spring Cloud Gateway.
 
 See the different application properties files for each example.
 
-To run:
-
-For each demo, run the following command and ofllow the instructions in the corresponding application-demoX.yml file:
+For each demo, run the following command and follow the instructions in the corresponding application-demoX.yml file:
 ```
 cd gateway-demo
 ./mvnw spring-boot:run -Dspring-boot.run.profiles=demo1
