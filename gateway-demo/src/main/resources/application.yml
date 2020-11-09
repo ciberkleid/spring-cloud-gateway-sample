@@ -1,6 +1,6 @@
 spring:
   application:
-    name: my-gateway
+    name: gateway-demo
   cloud:
     gateway:
       metrics:
