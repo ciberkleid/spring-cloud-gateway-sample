@@ -40,6 +40,11 @@ spring:
                 redis-rate-limiter.replenishRate: 2
                 redis-rate-limiter.burstCapacity: 2
 
+management:
+  health:
+    redis:
+      enabled: true
+
 # Demo redis rate limiter filter
 
 # Show reactive redis dependency in pom.xml
