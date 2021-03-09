@@ -54,11 +54,11 @@ management:
 
 # Execute once to show rate limiter headers
 # Header x-ratelimit-remaining shows the number of requests you may send in the next second
-# http http://localhost:8080/trial
+# http :8080/trial
 
 # Execute multiple times until a rate limiting message is obtained
 # Notice occasional 429 Too Many Requests
 
-# COMMAND="http http://localhost:8080/trial"; for i in {1..10}; do ${COMMAND}; done
+# for i in {1..10}; do http :8080/trial; done
 # or
-# COMMAND="http http://localhost:8080/trial"; for((i=1;i<=10;i+=1)); do ${COMMAND}; done
+# for((i=1;i<=10;i+=1)); do http :8080/trial; done
