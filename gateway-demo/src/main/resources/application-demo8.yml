@@ -50,7 +50,7 @@ management:
 # Show reactive redis dependency in pom.xml
 # Show key resolver configuration in code
 # Start redis running on default port 6379
-#   docker run -d --name redis -p 6379:6379 redis
+#   docker run -d --rm --name redis -p 6379:6379 redis
 
 # Execute once to show rate limiter headers
 # Header x-ratelimit-remaining shows the number of requests you may send in the next second
