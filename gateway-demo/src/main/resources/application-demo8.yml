@@ -59,6 +59,6 @@ management:
 # Execute multiple times until a rate limiting message is obtained
 # Notice occasional 429 Too Many Requests
 
-# for i in {1..10}; do http :8080/trial; done
+# for i in {1..10}; do curlie :8080/trial; done
 # or
-# for((i=1;i<=10;i+=1)); do http :8080/trial; done
+# for((i=1;i<=10;i+=1)); do curlie :8080/trial; done
