@@ -50,30 +50,13 @@ public class GatewayDemoApplication {
 	@Bean
 	public RouteLocator routes(RouteLocatorBuilder builder) {
 		return builder.routes()
-				.route("modify_request_body", r -> r.path("/post/**")
+				.route("modify_request_body", r -> r
+						.path("/post/**")
 						.filters(f -> f.modifyRequestBody(
-								String.class, Msg.class, MediaType.APPLICATION_JSON_VALUE,
-								(exchange, s) -> Mono.just(new Msg(s.toUpperCase()))))
+								String.class, String.class,
+								(exchange, s) -> Mono.just(s.toUpperCase())))
 						.uri("https://httpbin.org"))
 				.build();
-	}
-
-	static class Msg {
-		String msg = "";
-
-		public Msg() { }
-
-		public Msg(String s) {
-			this.msg = s;
-		}
-
-		public String getMsg() {
-			return this.msg;
-		}
-
-		public void setMsg(String s) {
-			this.msg = s;
-		}
 	}
 
 }
