@@ -1,0 +1,16 @@
+#################### DEMO 10
+
+# Show spring-cloud-gateway-webflux dependency in pom.xml
+# Show Controller code in Java for Scatter/Gather pattern
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: scattergather
+          uri: forward:/api/scattergather/uuids
+          predicates:
+            - Path=/uuids
+
+# Test using the command below
+# http :8080/uuids
