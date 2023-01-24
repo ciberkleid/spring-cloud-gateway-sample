@@ -24,8 +24,10 @@ spring:
             - AddRequestParameter=numbytes, 10
             - AddRequestParameter=code, 200   # response code
             - AddRequestParameter=delay, {delay}  # delay before responding (seconds)
+      default-filters:
+        - AddResponseHeader=X-Response-Default-Foo, Default-Bar
 
-# Show weighted routing
+# Show weighted routing and default filter
 
-# Execute multiple times to see alternating uuid and ** responses
+# Execute multiple times to see alternating uuid and ** responses; default filter will always be included
 # time http :8080/demo/0 Host:example.com
