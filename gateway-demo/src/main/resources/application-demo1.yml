@@ -12,9 +12,5 @@ spring:
 # Show a basic path predicate routing to a destination uri
 
 # Test:
-# curl httpbin.org/uuid
-# curl localhost:8080/uuid
-
-# With http default formatted output:
-# http localhost:8080/uuid
-# http :8080/uuid --verbose
+# http httpbin.org/uuid -b
+# http :8080/uuid -b
