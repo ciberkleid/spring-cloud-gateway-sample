@@ -28,7 +28,7 @@ spring:
             - name: CircuitBreaker
               args:
                 name: myCircuitBreaker
-                fallbackUri: forward:/fallback/id
+                fallbackUri: forward:/api/fallback/id
 
 # Show fallback config code
 
