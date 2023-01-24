@@ -4,7 +4,7 @@
 
 # Test using the command below
 # Notice body is modified to upper case and contained in a "Msg" object
-# echo "Hello, world!" | http post httpbin.org/post | grep data
-#     you should see: "data": "Hello, world!\n",
-#  echo "Hello, world!" | http post :8080/post | grep data
-#     you should see: "data": "{\"msg\":\"HELLO, WORLD!\\n\"}",
+#   http post https://httpbin.org/post --raw Hello! | grep data
+#     you should see: "data": "Hello!",
+#   http post :8080/post --raw Hello! | grep data
+#     you should see: "data": "{\"msg\":\"HELLO!\"}",
