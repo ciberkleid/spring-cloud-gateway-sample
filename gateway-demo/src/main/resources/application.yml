@@ -4,7 +4,7 @@ spring:
   cloud:
     gateway:
       metrics:
-        enabled: true   # default value
+        enabled: true   # default value (see /actuator/metrics/spring.cloud.gateway.requests and /actuator/metrics/spring.cloud.gateway.routes.count)
       actuator:
         verbose:
           enabled: true   # see /actuator/gateway/routes
