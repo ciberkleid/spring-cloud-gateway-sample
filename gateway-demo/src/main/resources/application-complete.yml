@@ -1,0 +1,46 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: route1
+          uri: https://httpbin.org
+          predicates:
+            - Path=/demo/**
+            - Host=**.example.com
+            - Weight=group1, 5
+          filters:
+            - SetPath=/uuid
+        - id: route2
+          uri: https://httpbin.org
+          predicates:
+            - Path=/demo/{delay}
+            - Host=**.example.com
+            - Weight=group1, 5
+          filters:
+            - SetPath=/drip
+            #https://httpbin.org/drip?duration=2&numbytes=10&code=200&delay=2
+            - AddRequestParameter=duration, 0
+            - AddRequestParameter=numbytes, 10
+            - AddRequestParameter=code, 200
+            - AddRequestParameter=delay, {delay}
+            #            - CircuitBreaker=myCircuitBreaker
+            - name: CircuitBreaker
+              args:
+                name: myCircuitBreaker
+                fallbackUri: forward:/api/fallback/id
+        - id: route3
+          uri: https://httpbin.org
+          predicates:
+            - Path=/trial
+          filters:
+            - SetPath=/uuid
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 2
+                redis-rate-limiter.burstCapacity: 2
+        - id: route4
+          uri: forward:/api/scattergather/uuids
+          predicates:
+            - Path=/uuids
+      default-filters:
+        - AddResponseHeader=X-Response-Colombia, Bogota
