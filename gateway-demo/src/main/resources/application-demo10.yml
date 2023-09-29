@@ -13,4 +13,4 @@ spring:
             - Path=/uuids
 
 # Test using the command below
-# http :8080/uuids
+# http :8080/api/scattergather/uuids
