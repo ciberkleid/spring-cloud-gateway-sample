@@ -14,7 +14,7 @@ cd gateway-demo
 
 For the Rate Limiting example, you will need an instance of redis:
 ```
-docker run -d --name redis -p 6379:6379 redis
+docker run -d --rm --name redis -p 6379:6379 redis
 ```
 
 To re-create base project:
@@ -22,4 +22,13 @@ To re-create base project:
 name=gateway-demo
 dep=cloud-gateway,actuator,cloud-resilience4j,data-redis-reactive
 http https://start.spring.io/starter.zip type==maven-project dependencies==$dep name==$name artifactId==$name baseDir==$name | tar -xzvf -
+```
+Then, manually add the following dependency:
+```xml
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-resolver-dns-native-macos</artifactId>
+			<version>4.1.99.Final</version>
+			<classifier>osx-aarch_64</classifier>
+		</dependency>
 ```
