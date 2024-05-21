@@ -19,4 +19,4 @@ management:
         include: "*"        # OR include: gateway
   health:
     redis:
-      enabled: false      # because redis starter is in pom... change to true to use redis rate limiting
+      enabled: true
