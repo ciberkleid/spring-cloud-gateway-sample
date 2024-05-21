@@ -4,7 +4,7 @@
 
 Sample project to demonstrate Spring Cloud Gateway.
 
-Each demo is captured in a separate application properties file, starting with [application-demo1.yml](gateway-demo/src/main/resources/application-demo1.yml).
+Each demo is captured in a separate application properties file, starting with [application-demo1.yml](gateway-demo/src/main/resources/demos/application-demo1.yml).
 
 For each demo, review the instructions in the corresponding properties file.
 
