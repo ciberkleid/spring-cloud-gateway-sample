@@ -29,7 +29,7 @@ public class GatewayController {
     @GetMapping(path = "/scattergather/uuids")
     Mono<ResponseEntity<List<String>>> scatterGather(ProxyExchange<String> proxy) {
         Mono<ResponseEntity<String>> responseMono1 = proxy.uri("https://httpbin.org/uuid").get();
-        Mono<ResponseEntity<String>> responseMono2 = proxy.uri("https://httpbin.org/uuid").get();
+        Mono<ResponseEntity<String>> responseMono2 = proxy.uri("https://httpbingo.org/uuid").get(); // Different endpoint
         return Mono.zip(responseMono1, responseMono2).map(responses -> {
             ResponseEntity<String> response1 = responses.getT1();
             ResponseEntity<String> response2 = responses.getT2();

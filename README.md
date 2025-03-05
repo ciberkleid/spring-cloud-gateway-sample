@@ -18,3 +18,8 @@ Note that for the Rate Limiting example, you will need an instance of redis:
 ```
 docker run -d --rm --name redis -p 6379:6379 redis
 ```
+
+You can also run the backend locally (update the uri addresses in the demos to http://localhost)
+```shell
+docker run -d --rm --name httpbin -p 80:80 kennethreitz/httpbin
+```
